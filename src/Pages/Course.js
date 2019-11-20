@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import CourseCard from '../Components/CourseCard';
-import throttle from 'lodash.throttle';
+// import throttle from 'lodash/function/throttle';
 
 export default class CoursePage extends Component {
           constructor(props) {
