@@ -1,15 +1,16 @@
 import React, { Component, Fragment } from 'react';
-import Sidebar from '../Components/Sidebar';
-import Navbar from '../Components/Navbar';
-import Course from '../Components/CourseCard';
+import CourseCard from '../Components/CourseCard';
+import throttle from 'lodash.throttle';
+
 export default class CoursePage extends Component {
+          constructor(props) {
+                    super(props);
+                    this.state = {};
+          }
           render() {
                     return (
                               <Fragment>
-                                        <Navbar />
-                                        <Sidebar />
-                                        <Course />
-                                        <Course />
+                                        <CourseCard></CourseCard>
                               </Fragment>
                     );
           }
