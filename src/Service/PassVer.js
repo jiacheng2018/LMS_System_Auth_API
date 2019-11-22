@@ -11,7 +11,29 @@ passport.use(
                               callbackURL: '/auth/google/callback'
                     },
                     (accesstoken, refreshToken, profile, done) => {
-                              new User({ gooleId: profile.id }).save();
+                              User.findOne({ gooleId: profile.id }).then(
+                                        existingUser => {
+                                                  if (existingUser) {
+                                                            done(
+                                                                      null,
+                                                                      existingUser
+                                                            );
+                                                  } else {
+                                                            new User({
+                                                                      gooleId:
+                                                                                profile.id
+                                                            })
+                                                                      .save()
+                                                                      .then(
+                                                                                user =>
+                                                                                          done(
+                                                                                                    null,
+                                                                                                    user
+                                                                                          )
+                                                                      );
+                                                  }
+                                        }
+                              );
                     }
           )
 ); //register service
