@@ -1,4 +1,4 @@
-const express = require('express');
+const passport = require('passport');
 const {
           addStudent,
           getStudent,
@@ -6,10 +6,17 @@ const {
           updateStudent,
           deleteStudent
 } = require('../Controllers/Student');
-const router = express.Router();
-router.get('/', getAllStudents);
-router.get('/:id', getStudent);
-router.post('/', addStudent);
-router.put('/:id', updateStudent);
-router.delete('/:id', deleteStudent);
-module.exports = router;
+module.exports = app => {
+          app.get('/', getAllStudents);
+          app.get('/:id', getStudent);
+          app.post('/', addStudent);
+          app.put('/:id', updateStudent);
+          app.delete('/:id', deleteStudent);
+          app.get(
+                    '/auth/google',
+                    passport.authenticate('google', {
+                              scope: ['profile', 'email']
+                    })
+          );
+          app.get('/auth/google/callback', passport.authenticate('google'));
+};

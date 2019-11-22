@@ -3,26 +3,18 @@
 //  client secret xvpvbz9MXXyQ6bzvtNQj1zXO
 require('dotenv').config();
 const express = require('express');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy; //Using google Strategy
-const keys = require('./Config/Prod');
+const authRoutes = require('./Routes/Student');
+const mongoose = require('mongoose');
+require('./Models/Course');
+require('./Service/PassVer');
+mongoose.connect(
+          'mongodb+srv://jiacheng:85214997@cluster0-bbisj.mongodb.net/test?retryWrites=true&w=majority'
+);
 const app = express();
-passport.use(
-          new GoogleStrategy(
-                    {
-                              clientID: process.env.googleClientID, //global variable
-                              clientSecret: process.env.googleClientSecret,
-                              callbackURL: '/auth/google/callback'
-                    },
-                    accesstoken => {
-                              console.log(accesstoken);
-                    }
-          )
-); //register service
+authRoutes(app);
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
-const routes = require('./routes');
 const PORT = process.env.PORT || 5000;
 const morganLog =
           process.env.NODE_ENV === 'production'
@@ -32,16 +24,6 @@ app.use(helmet());
 app.use(morganLog);
 app.use(cors());
 app.use(express.json());
-app.use('/api', routes);
-app.use(
-          '/auth/google',
-          passport.authenticate('google', {
-                    scope: ['profile', 'email'] //user profile
-          })
-);
-app.get('/', (req, res) => {
-          res.json('hello');
-});
 app.listen(PORT, () => {
           console.log(`Server on port ${PORT}`);
 });

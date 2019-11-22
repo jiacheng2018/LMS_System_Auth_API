@@ -1,16 +1,6 @@
 const mongoose = require('mongoose');
-const scheme = new mongoose.Scheme({
-          _id: {
-                    type: String,
-                    uppercase: true
-          },
-          name: {
-                    type: String,
-                    required: true
-          },
-          description: {
-                    type: String,
-                    default: ''
-          }
+const { Schema } = mongoose;
+const ItemSchema = new Schema({
+          gooleId: String
 });
-const model = mongoose.model('Student', scheme);
+mongoose.model('Student', ItemSchema);
