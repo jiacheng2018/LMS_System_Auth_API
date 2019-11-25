@@ -1,10 +1,19 @@
-const Course = require('../Models/Course');
-async function addCourse(req, res) {
-          const course = new Course({
-                    _id: 'ABC123',
-                    name: 'Intro of web',
-                    description: 'intro'
-          });
-          await course.save();
-          return res.json(course);
+function addCourse(req, res) {}
+
+function getCourse(req, res) {}
+
+function getAllCourses(req, res) {
+          res.send('working');
 }
+
+function updateCourse(req, res) {}
+
+function deleteCourse(req, res) {}
+
+module.exports = {
+          addCourse,
+          getAllCourses,
+          getCourse,
+          updateCourse,
+          deleteCourse
+};
