@@ -1,12 +1,44 @@
-function addCourse(req, res) {}
-
-function getCourse(req, res) {}
-
-function getAllCourses(req, res) {
-          res.send('working');
+const CourseModel = require('../Models/Course');
+async function addCourse(req, res) {
+          const { codem, name, description } = req.body;
+          const course = new CourseModel({
+                    codem,
+                    name,
+                    description
+          });
+          await course.save();
+          return res.json(course);
 }
 
-function updateCourse(req, res) {}
+async function getCourse(req, res) {
+          const { id } = req.params;
+          const course = await CourseModel.findById(id);
+          if (!course) {
+                    return res.status(404);
+          }
+          return res.json(course);
+}
+
+async function getAllCourses(req, res) {
+          const course = await CourseModel.find();
+          return res.json(course);
+}
+
+async function updateCourse(req, res) {
+          const { id } = req.params;
+          const { name, description } = req.body;
+          const newCourse = await CourseModel.findByIdAndUpdate(
+                    id,
+                    { name, description },
+                    {
+                              new: true
+                    }
+          );
+          if (!newCourse) {
+                    return res.status(404).json('course not found');
+          }
+          return res.json(newCourse);
+}
 
 function deleteCourse(req, res) {}
 
