@@ -11,8 +11,8 @@ async function addCourse(req, res) {
 }
 
 async function getCourse(req, res) {
-          const { id } = req.params;
-          const course = await CourseModel.findById(id);
+          const { id: codem } = req.params;
+          const course = await CourseModel.findById(codem);
           if (!course) {
                     return res.status(404);
           }
@@ -22,6 +22,7 @@ async function getCourse(req, res) {
 async function getAllCourses(req, res) {
           const course = await CourseModel.find();
           return res.json(course);
+          //   console.log(res.json(course));
 }
 
 async function updateCourse(req, res) {
@@ -40,7 +41,14 @@ async function updateCourse(req, res) {
           return res.json(newCourse);
 }
 
-function deleteCourse(req, res) {}
+async function deleteCourse(req, res) {
+          const { id: codem } = req.params;
+          const course = await CourseModel.findByIdAndDelete(codem);
+          if (!course) {
+                    return res.status(404).json('course not  found');
+          }
+          return res.sendStatus(200);
+}
 
 module.exports = {
           addCourse,

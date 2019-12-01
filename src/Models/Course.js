@@ -27,6 +27,5 @@ const CourseModel = new mongoose.Schema(
                     id: false
           }
 );
-
 const model = mongoose.model('Course', CourseModel);
 module.exports = model;
